@@ -48,9 +48,9 @@
         <span class="menu-spacer"></span>
         <div fxShow="true" fxHide.lt-md="true">
           <a mat-button  routerLink="" style="font-size: 1em;">Dashboard</a>
-          <a mat-button  routerLink="/ownerReg">Find a Coach</a>
-          <a mat-button  routerLink="/driverReg">Previous Trips</a>
-          <a mat-button  routerLink="/vehicleReg">Passengers</a>
+          <a mat-button  routerLink="/">Find a Coach</a>
+          <a mat-button  routerLink="/">Previous Trips</a>
+          <a mat-button  routerLink="/passenger">Passengers</a>
           <a mat-button  routerLink="/trips">Coachs</a>
           
         </div>
@@ -63,8 +63,7 @@
       </mat-toolbar>
       
       <!-- <app-loader></app-loader> -->
-      <router-outlet></router-outlet>
-      
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
   
   </mat-sidenav-container> 

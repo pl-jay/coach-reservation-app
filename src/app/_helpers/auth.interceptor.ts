@@ -10,12 +10,14 @@ import {
 import { Observable } from 'rxjs';
 import { LoaderService } from './loader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
-  private requests: HttpRequest<any>[] = [];
 
-  constructor(private loaderService: LoaderService,private snackBar: MatSnackBar) { }
+  private requests: HttpRequest<any>[] = []
+  
+  constructor(private loaderService: LoaderService,private snackBar: MatSnackBar,private authService: AuthService) { }
 
   openSnackBar(message: string) {
       this.snackBar.open(message, 'Close', {
@@ -35,6 +37,17 @@ export class HttpInterceptorService implements HttpInterceptor {
 
       this.requests.push(req);
       this.loaderService.isLoading.next(true);
+
+      const currentUser  = this.authService.userToken
+
+      if(currentUser){
+          req = req.clone({
+            setHeaders: {
+                Authorization: `Bearer ${currentUser}`
+            }
+          })
+      }
+      
       return Observable.create(observer => {
           const subscription = next.handle(req)
               .subscribe(

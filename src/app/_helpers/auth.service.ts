@@ -8,10 +8,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AuthService {
 
+  public authenticationState = new BehaviorSubject(false)
+  
+  public userRole: BehaviorSubject<any>
 
-  authenticationState = new BehaviorSubject(false);
-
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
+  public currentUserToken: BehaviorSubject<any>
+  
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) { 
+    //this.currentUserToken = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('token')))
+  }
 
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Close', {
@@ -20,7 +25,15 @@ export class AuthService {
   }
 
   get isLoggedIn() {
-    return this.authenticationState.asObservable();
+    return this.authenticationState.asObservable()
+  }
+
+  get loggedUsersRole() {
+    return this.userRole.asObservable()
+  }
+
+  get userToken() {
+    return this.currentUserToken.value
   }
 
   loginMethod(value) {
@@ -31,16 +44,23 @@ export class AuthService {
 
     this.http.post(URL + 'login', user).subscribe((data) => {
       if (data[`success`] === 1) {
-        localStorage.setItem('token', data[`access_token`]);
-        localStorage.setItem('user_id', data[`user_id`]);
-        this.authenticationState.next(true);
-        this.openSnackBar('Login Success !');
+      
+        localStorage.setItem('token', data[`access_token`])
+        localStorage.setItem('user_id', data[`user_id`])
+      
+        this.authenticationState.next(true)
+      
+        this.currentUserToken.next(data[`access_token`])
+
+        this.openSnackBar('Login Success !')
+      
       } else {
-        this.authenticationState.next(false);
-        this.openSnackBar(data[`message`] + '!');
+        this.authenticationState.next(false)
+        this.openSnackBar(data[`message`] + '!')
       }
     });
     this.checkToken();
+    this.checkUserRole()
 
   }
 
@@ -68,13 +88,19 @@ export class AuthService {
   }
 
   checkToken() {
-    const token = localStorage.getItem('token');
-    if (token != null) {
+    if (localStorage.getItem('token') != null) {
       this.authenticationState.next(true);
-      console.log(this.authenticationState.value)
     } else {
       this.authenticationState.next(false);
-      console.log(this.authenticationState.value)
+    }
+  }
+
+  checkUserRole() {
+    const role = parseInt(localStorage.getItem('user_role'))
+    if (role == 1) {
+      this.userRole.next('passenger')
+    } else if( role == 2 ){
+      this.userRole.next("coach")
     }
   }
   
