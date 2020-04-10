@@ -12,15 +12,15 @@
 
     <code>observable|async</code>: Time: {{ time | async }}
 
-    <code>observable|async</code>: Time: {{ times | async }}
+    
 
-    <div *ngIf="usersRole | async">
+    <div *ngIf="usersRole$ | async">
         this is rediculous user role 1
     </div>
 
     <div *ngIf="usersRole$ | async">
         this is rediculous user role 2
     </div>
-{{ usersRole$.source._value }}
+{{ usersRole$.source }}
     
   </div>

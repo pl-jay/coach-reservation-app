@@ -10,7 +10,7 @@ export class AuthService {
 
   public authenticationState = new BehaviorSubject(false)
   
-  public userRole: BehaviorSubject<any>
+  public userRole: BehaviorSubject<string>
 
   public currentUserToken: BehaviorSubject<any>
   

@@ -9,8 +9,10 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
+  Roles: any = ['Admin', 'Author', 'Reader'];
+
+  ngOnInit() {
+   
   }
  
 }
