@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Hi {{ data.name }}</h1>
+<mat-dialog-content>
+  <p>Name :</p>
+  <mat-form-field>
+    <mat-label>Fav Name: </mat-label>
+    <input matNativeControl [(ngModel)]="animal" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">No</button>
+  <button mat-raised-button (click)="onClick()">Ok</button>
+</mat-dialog-actions>
+

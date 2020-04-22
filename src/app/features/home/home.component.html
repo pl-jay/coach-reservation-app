@@ -1,0 +1,45 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap.lg>
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Find a Coach">
+      <ng-template matTabContent>
+        <mat-form-field>
+          <mat-label>Route: </mat-label>
+          <mat-select placeholder="Bus Route" name="item">
+            <mat-option *ngFor="let item of items" [value]="item.id">
+              {{ item.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          fxLayout="row"
+          mat-raised-button
+          (click)="openDialog()"
+          color="primary"
+        >
+          Find Coach
+        </button>
+
+{{ animal }}
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Current Trip">
+      <ng-template matTabContent>
+        Current Trip Details
+        <button
+          fxLayout="row"
+          mat-raised-button
+          (click)="openDialog()"
+          color="primary"
+        >
+          Current Trip Details
+        </button>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+<app-data-table></app-data-table>
+
