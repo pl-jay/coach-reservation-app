@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { MaterialModule } from '../../material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -19,7 +20,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSnackBarModule
   ]
 })
 export class AuthModule { }

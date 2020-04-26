@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './core/auth.service';
+import { AuthService } from './core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,15 +17,13 @@ export class AppComponent {
    * it redirects the route to main nad login
    */
   ngOnInit(): void {
-    // this._authService.checkToken()
-    // this._authService.checkUserRole()
-    // this._authService.authenticationState.subscribe(state => {
-    //   if (state) {
-    //     this._router.navigate(['/']);
-    //   } else {
-    //     this._router.navigate(['login']);
-    //   }
-    // });
+    this._authService.checkToken()
+
+    this._authService.authenticationState.subscribe(state => {
+      if (state) {
+        this._router.navigate(['/home']);
+      }
+    });
   }
   title = 'coach-reservation-app';
 }

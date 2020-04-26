@@ -8,20 +8,21 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoaderService } from './loader.service';
+import { LoaderService } from '../loader/loader.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
 
   private requests: HttpRequest<any>[] = []
-  
+
   constructor(private loaderService: LoaderService,private snackBar: MatSnackBar,private authService: AuthService) { }
 
   openSnackBar(message: string) {
       this.snackBar.open(message, 'Close', {
         duration: 2000,
+        verticalPosition: 'top'
       });
   }
 
@@ -29,6 +30,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       const i = this.requests.indexOf(req);
       if (i >= 0) {
           this.requests.splice(i, 1);
+          console.log(this.requests.length)
       }
       this.loaderService.isLoading.next(this.requests.length > 0);
   }
@@ -38,16 +40,17 @@ export class HttpInterceptorService implements HttpInterceptor {
       this.requests.push(req);
       this.loaderService.isLoading.next(true);
 
-      const currentUser  = this.authService.userToken
+      const access_token  = this.authService.getToken()
+      console.log(access_token)
 
-      if(currentUser){
+      if(access_token){
           req = req.clone({
             setHeaders: {
-                Authorization: `Bearer ${currentUser}`
+                Authorization: `Bearer ${access_token}`
             }
           })
       }
-      
+
       return Observable.create(observer => {
           const subscription = next.handle(req)
               .subscribe(
@@ -55,18 +58,20 @@ export class HttpInterceptorService implements HttpInterceptor {
                       if (event instanceof HttpResponse) {
                           this.removeRequest(req);
                           observer.next(event);
-                          this.openSnackBar('Success !');
+                          this.openSnackBar('Done')
                       }
                   },
                   err => {
-                      this.openSnackBar(err);
+                    console.log(err)
+                      this.openSnackBar('Something is wrong, please try again !');
                       this.removeRequest(req);
                       observer.error(err);
+                      this.loaderService.isLoading.next(false)
                   },
                   () => {
                       this.removeRequest(req);
                       observer.complete();
-                      this.openSnackBar('Success !');
+                      this.loaderService.isLoading.next(false)
                   });
           // remove request from queue when cancelled
           return () => {

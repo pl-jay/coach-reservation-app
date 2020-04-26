@@ -48,50 +48,7 @@
           Login
         </button>
       </mat-card-actions>
+      <p>Don't have a account yet Register <a routerLink="/auth/register">here</a> !</p>
     </form>
   </mat-card>
 </div>
-
-<!-- <div fxLayout="row wrap">
-        <!-- loop over the cardList and show the cards -->
-<!-- <div *ngFor="let card of cardList">
-          cards here
-          <mat-card class="mat-elevation-z1">
-            <img mat-card-image [src]="card.imgSrc" />
-            <mat-card-title> {{ card.title }} </mat-card-title>
-            <mat-card-content> {{ card.description }} </mat-card-content>
-            <mat-card-footer>
-              <button fxFlex mat-flat-button color="primary">
-                Do Something Button
-              </button>
-            </mat-card-footer>
-          </mat-card>
-        </div>
-      </div> -->
-
-<!--
-    <div>
-        <p>login works!</p>
-        <button mat-button (click)="butn()">Click</button>
-
-        <code> promise|async </code>:
-
-        <button (click)="clicked()">{{ arrived ? 'Reset' : 'Resolve' }}</button>
-
-
-        <span>Wait for it... {{ greeting | async }}</span>
-
-        <code>observable|async</code>: Time: {{ time | async }}
-
-
-
-        <div *ngIf="usersRole$ | async">
-            this is rediculous user role 1
-        </div>
-
-        <div *ngIf="usersRole$ | async">
-            this is rediculous user role 2
-        </div>
-    {{ usersRole$.source }}
-
-      </div> -->

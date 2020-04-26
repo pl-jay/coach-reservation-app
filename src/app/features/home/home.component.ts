@@ -3,6 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogOverviewComponent } from 'src/app/shared/dialog-overview/dialog-overview.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { HomeService } from 'src/app/core/consumer/home.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,40 +15,36 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class HomeComponent implements OnInit {
 
-  name: string
-  animal: string
+  date: Date
+  routes: any = [{"id":0,"route":"none"}]
+  selectedRoute: any
+  tablesData: any = []
 
-  items: any = [
-    {id:0,value:'Colombo to Kandy'},
-    {id:1,value:'Kandy - London'},
-    {id:2,value:'Gampola - Dubai'}
-  ]
+  showTable = new BehaviorSubject(false)
+  dataAvailable = new BehaviorSubject(false)
 
-  tab: any = [
-    {}
-  ]
-
-  ngOnInit() {
-
-  }
-
-  constructor(public dialog: MatDialog) { }
-
-
-
-  openDialog() {
-    const dialogRef = this.dialog.open(
-      DialogOverviewComponent, {
-        width: '200px',
-        data: { name: this.name }
-      });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
-      this.animal = result
-      console.log('Dialog was closed !')
+  constructor(public dialog: MatDialog, public _homeService: HomeService) {
+    this._homeService.getRoutes().subscribe((res) => {
+      this.routes = res;
     })
   }
+
+  ngOnInit() {
+  }
+
+  onLinkClick(event: MatTabChangeEvent) {
+    event.index == 1 ? this.showTable.next(false) : this.showTable.next(true)
+  }
+
+onSubmit(){
+  console.log(this.date)
+  this._homeService.getCoachList().subscribe((res) => {
+    this.tablesData = res;
+    console.log(res)
+  })
+
+  this.showTable.next(true)
+}
 
 }
 

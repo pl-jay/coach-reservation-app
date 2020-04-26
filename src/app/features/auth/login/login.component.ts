@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { AuthenticatioinService } from 'src/app/core/auth/authenticatioin.service';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AppState, selectAuthState } from 'src/app/store/auth-store/auth.states';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/shared/models/user';
 import { LOGIN } from 'src/app/store/auth-store/actions/auth.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string | null;
   getState: Observable<any>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,private _snackBar: MatSnackBar,private auth: AuthService) {
     this.getState = this.store.select(selectAuthState);
   }
 
@@ -29,71 +30,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
   onSubmit(): void {
     const payload = {
       username: this.user.email,
       password: this.user.password
     }
-    this.store.dispatch(LOGIN(payload))
+    this.store.dispatch(LOGIN(payload));
+    this.openSnackBar('Success','Ok')
   }
 
 
 
-  // greeting: Promise<string>|null = null;
-  // arrived: boolean = false;
-
-  // usersRole$: Observable<string>
-
-  // private resolve: Function|null = null;
-
-  // constructor(private login: AuthenticatioinService, private _authService: AuthService) {  }
-
-  // login_form = new FormGroup({
-  //   user_name: new FormControl(''),
-  //   password: new FormControl('')
-  // });
-
-  // ngOnInit(): void {
-  //   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //   //Add 'implements OnInit' to the class.
-  //   this.usersRole$ = this._authService.loggedUsersRole
-  //   console.log(this.usersRole$)
-  // }
-
-  // /**
-  //  * Testing
-  //  * Functions
-  //  */
-  // time = new Observable<string>((observer: Observer<string>) => {
-  //   setInterval(() => observer.next(new Date().toString()), 5000);
-  // });
-
-
-  // reset() {
-  //   this.arrived = false;
-  //   this.greeting = new Promise<string>((resolve, reject) => { this.resolve = resolve; });
-  // }
-
-  // clicked() {
-  //   if (this.arrived) {
-  //     this.reset();
-  //   } else {
-  //     this.resolve !('hi there!');
-  //     this.arrived = true;
-  //   }
-  // }
-
-  // butn() {
-  //   this.login.getToken().subscribe((res) => {
-  //     console.log(res)
-  //   })
-  // }
-
-  // /**
-  //  * Functional
-  //  * Functions
-  //  */
-  // onSubmit() {
-  //   console.log(this.login_form.value)
-  // }
 }

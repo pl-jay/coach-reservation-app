@@ -1,0 +1,11 @@
+<h3 mat-dialog-title>Payment</h3>
+<mat-dialog-content>
+  <p>Are you Pay Now</p>
+  <p>Your Seat Number {{data}} </p>
+</mat-dialog-content>
+
+<mat-dialog-actions >
+  <button mat-raised-button color="primary" (click)="onClick()">Pay Now</button>
+  <button mat-raised-button color="warn" (click)="onCancelClick()">Later</button>
+</mat-dialog-actions>
+

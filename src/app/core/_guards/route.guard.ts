@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AuthService } from '../auth.service'
+import { AuthService } from '../auth/auth.service'
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class RouteGuard implements CanActivate {
     if (localStorage.getItem('token')) {
       return true;
     }
-    this._router.navigate(['/login']).then(() => {
+    this._router.navigate(['/auth/login']).then(() => {
       window.location.reload();
     });
     return false;

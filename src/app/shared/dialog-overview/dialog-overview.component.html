@@ -1,14 +1,30 @@
-<h1 mat-dialog-title>Hi {{ data.name }}</h1>
+<h3 mat-dialog-title>Confirm Reservation</h3>
 <mat-dialog-content>
-  <p>Name :</p>
+  <p>Available Seat No </p>
   <mat-form-field>
-    <mat-label>Fav Name: </mat-label>
-    <input matNativeControl [(ngModel)]="animal" />
+    <mat-select [(ngModel)]="selectedNo">
+      <mat-option *ngFor="let seat of data" [value]="seat">
+        Seat No : {{seat}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="onNoClick()">No</button>
-  <button mat-raised-button (click)="onClick()">Ok</button>
+<mat-dialog-actions fxLayout="row">
+  <button
+    fxLayoutAlign="start end"
+    mat-raised-button
+    color="primary"
+    (click)="onClick()"
+  >
+    Reserve
+  </button>
+  <button
+    fxLayoutAlign="end start"
+    mat-raised-button
+    color="warn"
+    (click)="onCancelClick()"
+  >
+    Cancel
+  </button>
 </mat-dialog-actions>
-

@@ -1,45 +1,58 @@
 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap.lg>
-  <mat-tab-group animationDuration="0ms">
+  <mat-tab-group
+    animationDuration="0ms"
+    (selectedTabChange)="onLinkClick($event)"
+  >
     <mat-tab label="Find a Coach">
       <ng-template matTabContent>
-        <mat-form-field>
-          <mat-label>Route: </mat-label>
-          <mat-select placeholder="Bus Route" name="item">
-            <mat-option *ngFor="let item of items" [value]="item.id">
-              {{ item.value }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <p>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Route: </mat-label>
+            <mat-select
+              [(ngModel)]="selectedRoute"
+              placeholder="Bus Route"
+              name="item"
+            >
+              <mat-option *ngFor="let item of routes" [value]="item.id">
+                {{ item.route }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="date" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </p>
 
         <button
           fxLayout="row"
           mat-raised-button
-          (click)="openDialog()"
+          (click)="onSubmit()"
           color="primary"
         >
           Find Coach
         </button>
-
-{{ animal }}
       </ng-template>
     </mat-tab>
 
     <mat-tab label="Current Trip">
       <ng-template matTabContent>
         Current Trip Details
-        <button
-          fxLayout="row"
-          mat-raised-button
-          (click)="openDialog()"
-          color="primary"
-        >
-          Current Trip Details
-        </button>
+
+        <app-current-trip></app-current-trip>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>
 
-
-<app-data-table></app-data-table>
-
+<app-data-table
+  *ngIf="showTable | async"
+  [dataSource]="tablesData"
+></app-data-table>

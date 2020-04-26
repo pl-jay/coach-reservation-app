@@ -12,6 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LoaderComponent } from '../shared/loader/loader.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatToolbarModule,
     FlexLayoutModule,
     RouterModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    SharedModule
   ],
   exports: [FooterComponent,NavbarComponent]
 })

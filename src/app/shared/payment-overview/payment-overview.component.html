@@ -1,0 +1,28 @@
+<mat-dialog-content>
+  <p>Advance Payment</p>
+  <mat-label>Balance: {{ balance }} </mat-label>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Amount: </mat-label>
+    <input matInput [(ngModel)]="amount" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row">
+
+    <button
+    fxLayoutAlign="start end"
+    mat-raised-button
+    color="primary"
+    (click)="onRightClick()"
+  >
+    Pay
+  </button>
+  <button
+    fxLayoutAlign="end start"
+    mat-raised-button
+    color="warn"
+    (click)="onDoneClick()"
+  >
+    Cancel
+  </button>
+</mat-dialog-actions>
